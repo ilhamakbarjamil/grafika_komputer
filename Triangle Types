@@ -1,0 +1,35 @@
+using System;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        double[] sides = Array.ConvertAll(Console.ReadLine().Split(), double.Parse);
+        Array.Sort(sides);
+        Array.Reverse(sides);
+        
+        double A = sides[0], B = sides[1], C = sides[2];
+        
+        if (A >= B + C)
+        {
+            Console.WriteLine("NAO FORMA TRIANGULO");
+        }
+        else
+        {
+            double A2 = A * A, B2 = B * B, C2 = C * C;
+            
+            if (A2 == B2 + C2)
+                Console.WriteLine("TRIANGULO RETANGULO");
+            else if (A2 > B2 + C2)
+                Console.WriteLine("TRIANGULO OBTUSANGULO");
+            else
+                Console.WriteLine("TRIANGULO ACUTANGULO");
+            
+            if (A == B && B == C)
+                Console.WriteLine("TRIANGULO EQUILATERO");
+            else if (A == B || B == C || A == C)
+                Console.WriteLine("TRIANGULO ISOSCELES");
+        }
+    }
+}
