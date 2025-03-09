@@ -1,0 +1,13 @@
+using System;
+using System.Globalization;
+
+class SphereVolume
+{
+    static void Main()
+    {
+        double radius = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+        const double PI = 3.14159;
+        double volume = (4.0 / 3) * PI * Math.Pow(radius, 3);
+        Console.WriteLine($"VOLUME = {volume.ToString("F3", CultureInfo.InvariantCulture)}");
+    }
+}
