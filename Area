@@ -1,0 +1,28 @@
+using System;
+using System.Globalization;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        string[] input = Console.ReadLine().Split(' ');
+        double A = double.Parse(input[0], CultureInfo.InvariantCulture);
+        double B = double.Parse(input[1], CultureInfo.InvariantCulture);
+        double C = double.Parse(input[2], CultureInfo.InvariantCulture);
+        const double PI = 3.14159;
+        
+        // Calculate each area
+        double triangleArea = A * C / 2.0;
+        double circleArea = PI * C * C;
+        double trapeziumArea = (A + B) * C / 2.0;
+        double squareArea = B * B;
+        double rectangleArea = A * B;
+        
+        // Output the results
+        Console.WriteLine("TRIANGULO: " + triangleArea.ToString("F3", CultureInfo.InvariantCulture));
+        Console.WriteLine("CIRCULO: " + circleArea.ToString("F3", CultureInfo.InvariantCulture));
+        Console.WriteLine("TRAPEZIO: " + trapeziumArea.ToString("F3", CultureInfo.InvariantCulture));
+        Console.WriteLine("QUADRADO: " + squareArea.ToString("F3", CultureInfo.InvariantCulture));
+        Console.WriteLine("RETANGULO: " + rectangleArea.ToString("F3", CultureInfo.InvariantCulture));
+    }
+}
