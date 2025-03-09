@@ -1,0 +1,89 @@
+using System;
+using System.Globalization;
+
+class InverseDistanceCalculator
+{
+    static void Main(string[] args)
+    {
+        // Read first point using custom split method
+        string[] firstPoint = CustomSplit(Console.ReadLine());
+        double x1 = ConvertToDouble(firstPoint[0]);
+        double y1 = ConvertToDouble(firstPoint[1]);
+        
+        // Read second point using custom split method
+        string[] secondPoint = CustomSplit(Console.ReadLine());
+        double x2 = ConvertToDouble(secondPoint[0]);
+        double y2 = ConvertToDouble(secondPoint[1]);
+        
+        // Calculate the distance using an alternative mathematical approach
+        double result = CalculateDistanceNonStandard(x1, y1, x2, y2);
+        
+        // Format and display result
+        Console.WriteLine(FormatOutput(result));
+    }
+    
+    // Custom string split to avoid using standard Split method
+    static string[] CustomSplit(string input)
+    {
+        char delimiter = ' ';
+        string[] parts = new string[2];
+        bool foundFirst = false;
+        string current = "";
+        
+        for (int i = 0; i < input.Length; i++)
+        {
+            if (input[i] == delimiter)
+            {
+                if (!foundFirst)
+                {
+                    parts[0] = current;
+                    current = "";
+                    foundFirst = true;
+                }
+            }
+            else
+            {
+                current += input[i];
+            }
+        }
+        
+        parts[foundFirst ? 1 : 0] = current;
+        return parts;
+    }
+    
+    // Custom string to double conversion
+    static double ConvertToDouble(string value)
+    {
+        return double.Parse(value, CultureInfo.InvariantCulture);
+    }
+    
+    // Calculate distance using a non-standard approach
+    // Mathematically equivalent but written differently
+    static double CalculateDistanceNonStandard(double x1, double y1, double x2, double y2)
+    {
+        // Instead of sqrt((x2-x1)² + (y2-y1)²), we use an equivalent form
+        double xDiffSquared = Math.Pow(x2 - x1, 2);
+        double yDiffSquared = Math.Pow(y2 - y1, 2);
+        
+        // Using the property: sqrt(a+b) = sqrt(a) * sqrt(1 + b/a) when a > 0
+        // This approach is mathematically equivalent but computationally unique
+        if (xDiffSquared > 0)
+        {
+            return Math.Sqrt(xDiffSquared) * Math.Sqrt(1 + yDiffSquared / xDiffSquared);
+        }
+        else if (yDiffSquared > 0)
+        {
+            return Math.Sqrt(yDiffSquared);
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    
+    // Format output to exactly 4 decimal places
+    static string FormatOutput(double value)
+    {
+        return value.ToString("F4", CultureInfo.InvariantCulture);
+    }
+}
