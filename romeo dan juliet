@@ -1,0 +1,37 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        string line;
+        while ((line = Console.ReadLine()) != null)
+        {
+            string[] parts = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length < 6) continue;
+
+            double x1 = double.Parse(parts[0]);
+            double y1 = double.Parse(parts[1]);
+            double x2 = double.Parse(parts[2]);
+            double y2 = double.Parse(parts[3]);
+            double angleCMD = double.Parse(parts[4]);
+            double angleENF = double.Parse(parts[5]);
+
+            // Konversi sudut dari derajat ke radian
+            double cmdRad = angleCMD * Math.PI / 180.0;
+            double enfRad = angleENF * Math.PI / 180.0;
+
+            // Hitung jarak antara A dan B
+            double AB = Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
+
+            // Hitung jarak maksimum MN menggunakan rumus trigonometri
+            double tanCMD = Math.Tan(cmdRad);
+            double tanENF = Math.Tan(enfRad);
+            
+            double MN = AB * (1.0 / tanCMD + 1.0 / tanENF);
+
+            // Output dengan 3 digit desimal
+            Console.WriteLine(MN.ToString("F3"));
+        }
+    }
+}
