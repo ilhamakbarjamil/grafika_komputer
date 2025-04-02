@@ -1,0 +1,38 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        string line;
+        while ((line = Console.ReadLine()) != null)
+        {
+            double a = double.Parse(line, System.Globalization.CultureInfo.InvariantCulture);
+            if (a == 0)
+            {
+                Console.WriteLine("0.000 0.000 0.000");
+                continue;
+            }
+
+            double aSquared = a * a;
+            double sqrt3 = Math.Sqrt(3);
+            double pi = Math.PI;
+
+            // Hitung area dengan formula pasti
+            double striped = aSquared * (1 + pi/3 - sqrt3);
+            double dotted = aSquared * (2 * sqrt3 - 4 + pi/3);
+            double rest = aSquared - striped - dotted;
+
+            // Pastikan pembulatan tepat 3 digit (midpoint rounding)
+            striped = Math.Round(striped, 3, MidpointRounding.AwayFromZero);
+            dotted = Math.Round(dotted, 3, MidpointRounding.AwayFromZero);
+            rest = Math.Round(rest, 3, MidpointRounding.AwayFromZero);
+
+            // Format output: pastikan tidak ada -0.000 atau trailing zeros
+            Console.WriteLine(
+                $"{striped:F3} {dotted:F3} {rest:F3}"
+                .Replace("-0.000", "0.000")
+            );
+        }
+    }
+}
