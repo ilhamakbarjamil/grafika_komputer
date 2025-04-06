@@ -1,0 +1,90 @@
+using System;
+
+namespace RomeoJulietGeometricSolver
+{
+    public class Point
+    {
+        public double X { get; }
+        public double Y { get; }
+        
+        public Point(double x, double y)
+        {
+            X = x;
+            Y = y;
+        }
+        
+        public double DistanceTo(Point other)
+        {
+            double dx = X - other.X;
+            double dy = Y - other.Y;
+            return Math.Sqrt(dx * dx + dy * dy);
+        }
+    }
+
+    public static class AngleConverter
+    {
+        public static double DegreesToRadians(double degrees)
+        {
+            return degrees * Math.PI / 180.0;
+        }
+        
+        public static double Cotangent(double angleRadians)
+        {
+            return 1.0 / Math.Tan(angleRadians);
+        }
+    }
+
+    public class DistanceCalculator
+    {
+        private readonly Point pointA;
+        private readonly Point pointB;
+        
+        public DistanceCalculator(Point a, Point b)
+        {
+            pointA = a;
+            pointB = b;
+        }
+        
+        public double CalculateMaxDistance(double angleCMD, double angleENF)
+        {
+            double AB = pointA.DistanceTo(pointB);
+            
+            double cotCMD = AngleConverter.Cotangent(
+                AngleConverter.DegreesToRadians(angleCMD));
+            
+            double cotENF = AngleConverter.Cotangent(
+                AngleConverter.DegreesToRadians(angleENF));
+            
+            return AB * (cotCMD + cotENF);
+        }
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            string line;
+            while ((line = Console.ReadLine()) != null)
+            {
+                string[] parts = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length < 6) continue;
+
+                Point pointA = new Point(
+                    double.Parse(parts[0]), 
+                    double.Parse(parts[1]));
+                
+                Point pointB = new Point(
+                    double.Parse(parts[2]), 
+                    double.Parse(parts[3]));
+                
+                double angleCMD = double.Parse(parts[4]);
+                double angleENF = double.Parse(parts[5]);
+
+                DistanceCalculator calculator = new DistanceCalculator(pointA, pointB);
+                double maxDistance = calculator.CalculateMaxDistance(angleCMD, angleENF);
+                
+                Console.WriteLine(maxDistance.ToString("F3"));
+            }
+        }
+    }
+}
